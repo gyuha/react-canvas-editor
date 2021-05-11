@@ -1,0 +1,27 @@
+@import '_variables.scss';
+
+.toolbar {
+  display: flex;
+  width: 100%;
+  background-color: $toolbar-background-color;
+
+  .item {
+    flex: none;
+    color: $toolbar-color;
+    margin: 5px;
+    padding:5px;
+    border: solid 1px $toolbar-border-color;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover, &:focus {
+      color: lighten($toolbar-color, 10%);
+      border-color: darken($toolbar-border-color, 10%);
+      background-color: lighten($toolbar-background-color, 10%)
+    }
+  }
+
+  .item-left {
+    margin-left: auto;
+  }
+}
