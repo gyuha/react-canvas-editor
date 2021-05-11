@@ -1,0 +1,206 @@
+{
+  "cc": {
+    "prefix": "cc",
+    "body": [
+      "console.log(\"%c%s\", 'background: #222; color: yellow; padding: 5px;', ${0:$CLIPBOARD});"
+    ],
+    "description": "color log"
+  },
+  "cf": {
+    "prefix": "cf",
+    "body": [
+      "console.log('💾 %c${TM_FILENAME}:${TM_LINE_NUMBER}', 'background: #222; color: yellow; padding: 5px;', ${0:$CLIPBOARD});"
+    ],
+    "description": "cf"
+  },
+  "ce": {
+    "prefix": "ce",
+    "body": [
+      "CONSOLE_ERROR('📢 [${TM_FILENAME}:${TM_LINE_NUMBER}]', ${0:$CLIPBOARD});"
+    ],
+    "description": "console error log"
+  },
+  "tsrfc": {
+    "prefix": "tsrfc",
+    "body": [
+      "import React, { useState, useEffect } from 'react';\r",
+      "\r",
+      "const ${TM_FILENAME_BASE} = (): React.ReactElement | null => {\r",
+      "  ${1}\r",
+      "  return <></>;\r",
+      "};\r",
+      "\r",
+      "export default ${TM_FILENAME_BASE};\r",
+      ""
+    ],
+    "description": "React Function component"
+  },
+  "tsrfcp": {
+    "prefix": "tsrfcp",
+    "body": [
+      "import React, { useState, useEffect } from 'react';\r",
+      "\r",
+      "type ${TM_FILENAME_BASE}Props = {\r",
+      "  ${1}\r",
+      "};\r",
+      "\r",
+      "const ${TM_FILENAME_BASE} = ({  }: ${TM_FILENAME_BASE}Props): React.ReactElement | null => {\r",
+      "  \r",
+      "  return <></>;\r",
+      "};\r",
+      "\r",
+      "${TM_FILENAME_BASE}.defaultProps = {} as ${TM_FILENAME_BASE}Props;\r",
+      "\r",
+      "export default ${TM_FILENAME_BASE};\r",
+      ""
+    ],
+    "description": "React Function component with props"
+  },
+  "tsrfcpc": {
+    "prefix": "tsrfcpc",
+    "body": [
+      "import React, { useState, useEffect } from 'react';\r",
+      "\r",
+      "type ${TM_FILENAME_BASE}Props = {\r",
+      "  children: JSX.Element;\r",
+      "};\r",
+      "\r",
+      "const ${TM_FILENAME_BASE} = ({ children }: ${TM_FILENAME_BASE}Props): React.ReactElement | null => {\r",
+      "  ${1}\r",
+      "\r",
+      "  return <div>{children}</div>;\r",
+      "};\r",
+      "\r",
+      "${TM_FILENAME_BASE}.defaultProps = {} as ${TM_FILENAME_BASE}Props;\r",
+      "\r",
+      "export default ${TM_FILENAME_BASE};\r",
+      ""
+    ],
+    "description": "React Function component with children props"
+  },
+  "RectComment": {
+    "prefix": "rc",
+    "scope": "typescriptreact",
+    "body": [
+      "{/*--------------------------------------------------------------------------------*/}\r",
+      "{/* ${1}                                                      */}\r",
+      "{/*--------------------------------------------------------------------------------*/}"
+    ],
+    "description": ""
+  },
+  "gqlqeury": {
+    "prefix": "gqlquery",
+    "scope": "typescript",
+    "body": [
+      "import gql from 'graphql-tag';",
+      "",
+      "/**",
+      " * ${2:}",
+      " */",
+      "const query = gql`",
+      "  query ${TM_FILENAME_BASE/(.*)(.gql)/${1:/capitalize}/g}(",
+      "    ${3:}",
+      "  ) {",
+      "    ${TM_FILENAME_BASE}(",
+      "      ${4:}",
+      "    ) {",
+      "      ${5:}",
+      "    }",
+      "  }",
+      "`;",
+      "",
+      "const ${TM_FILENAME_BASE/([a-z]*)(([A-Z])+([a-z]+))|(\\.gql)?/${1:/upcase}${2:+_}$3${4:/upcase}/g}: IGraphqlQuery = {",
+      "  client: '${1:}',",
+      "  mode: 'query',",
+      "  names: ['${TM_FILENAME_BASE/(.*)(.gql)/${1}/g}'],",
+      "  query,",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE/([a-z]*)(([A-Z])+([a-z]+))|(\\.gql)?/${1:/upcase}${2:+_}$3${4:/upcase}/g};",
+      ""
+    ],
+    "description": ""
+  },
+  "gqlmutate": {
+    "prefix": "gqlmutate",
+    "scope": "typescript",
+    "body": [
+      "import gql from 'graphql-tag';",
+      "",
+      "/**",
+      " * ${2:}",
+      " */",
+      "const query = gql`",
+      "  mutation ${TM_FILENAME_BASE/(.*)(.gql)/${1:/capitalize}/g}(",
+      "    ${3:}",
+      "  ) {",
+      "    ${TM_FILENAME_BASE/(.*)(.gql)/${1}/g}(",
+      "      ${4:}",
+      "    ) {",
+      "      ${5:}",
+      "    }",
+      "  }",
+      "`;",
+      "",
+      "const ${TM_FILENAME_BASE/([a-z]*)(([A-Z])+([a-z]+))|(\\.gql)?/${1:/upcase}${2:+_}$3${4:/upcase}/g}: IGraphqlQuery = {",
+      "  client: '${1:}',",
+      "  mode: 'mutate',",
+      "  names: ['${TM_FILENAME_BASE/(.*)(.gql)/${1}/g}'],",
+      "  query,",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE/([a-z]*)(([A-Z])+([a-z]+))|(\\.gql)?/${1:/upcase}${2:+_}$3${4:/upcase}/g};",
+      ""
+    ],
+    "description": ""
+  },
+  "tsrprovider": {
+    "prefix": "tsrprovider",
+    "body": [
+      "import useGraphql, { GraphqlState } from '@/hooks/useGraphql';",
+      "import React, { createContext, useContext } from 'react';",
+      "",
+      "const ${TM_FILENAME_BASE/Provider$//gi}StateContext = createContext<",
+      "  [GraphqlState<${1:INTERFACE_TYPE}>, (variables: unknown) => Promise<void>] | null",
+      ">(null);",
+      "",
+      "type ${TM_FILENAME_BASE}Props = {",
+      "  children: React.ReactElement | null;",
+      "};",
+      "",
+      "const ${TM_FILENAME_BASE} = ({ children }: ${TM_FILENAME_BASE}Props) => {",
+      "  const [state, fetchData] = useGraphql<${1:INTERFACE_TYPE}>(${2:GRAPHQL_QUERY});",
+      "",
+      "  return (",
+      "    <${TM_FILENAME_BASE/Provider$//gi}StateContext.Provider value={[state, fetchData]}>",
+      "      {children}",
+      "    </${TM_FILENAME_BASE/Provider$//gi}StateContext.Provider>",
+      "  );",
+      "}",
+      "",
+      "${TM_FILENAME_BASE}.defaultProps = {} as ${TM_FILENAME_BASE}Props;",
+      "",
+      "export const use${TM_FILENAME_BASE/Provider$//gi}State = (): [",
+      "  GraphqlState<${1:INTERFACE_TYPE}>,",
+      "  (variables: unknown) => Promise<void>",
+      "] => {",
+      "  const state = useContext(${TM_FILENAME_BASE/Provider$//gi}StateContext);",
+      "  if (!state) {",
+      "    throw new Error('Cannot find ${TM_FILENAME_BASE/Provider$//gi}StateContext');",
+      "  }",
+      "  return state;",
+      "};",
+      "",
+      "export default ${TM_FILENAME_BASE};",
+      ""
+    ],
+    "description": "tsrprovider"
+  },
+  "refpath": {
+    "prefix": "ref",
+    "body": [
+      "/// <reference path='${1}' />"
+    ],
+    "description": "typescript reference path"
+  }
+}
