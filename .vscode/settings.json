@@ -1,0 +1,55 @@
+{
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "package-lock.json": true,
+    "yarn.lock": true,
+    "**/.vscode": true
+   },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javscript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.formatOnSave": false,
+    "editor.suggest.insertMode": "replace"
+  },
+  "css.lint.emptyRules": "ignore",
+  "cSpell.diagnosticLevel": "Hint",
+  "cSpell.words": [
+    "Manlab",
+    "Sider",
+    "antd",
+    "commnunity",
+    "playpot",
+    "reduxjs",
+    "submenu"
+  ],
+  "favorites.resources": [
+    "src\\components",
+    "src\\graphql"
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.meta": true,
+    "**/build": true,
+    "**/node_modules": true,
+    "**/config": true,
+    "**/scripts": true
+  },
+  "explorerExclude.backup": null,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

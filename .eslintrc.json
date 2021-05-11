@@ -1,0 +1,118 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "jest",
+    "@typescript-eslint",
+    "prettier",
+    "react-hooks"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error"
+    ],
+    "no-console": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "json": "never"
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars-experimental": "warn",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "no-plusplus": "off",
+    "no-unused-vars": "off",
+    "no-use-before-define": [
+      "off",
+      {
+        "variables": false
+      }
+    ],
+    "react/js-no-target-blank": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-param-reassign": "off",
+    "prefer-template": "off",
+    "import/no-unresolved": "off",
+    "react/no-array-index-key": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": [
+      "off",
+      "warn", {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ],
+    "no-undef": "off",
+    "no-nested-ternary": "off",
+    "no-debugger": "off",
+    "no-useless-catch": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    },
+    "react": {
+      "pragma": "React",
+      "version": "17.0.1"
+    }
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true,
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "JSX": true
+}
+}
