@@ -5,7 +5,7 @@ import CanvasEditor from './compnents/canvasEditor/CanvasEditor';
 function App() {
   return (
     <div className="App">
-      <CanvasEditor id="test" />
+      <CanvasEditor id="editor" />
     </div>
   );
 }
