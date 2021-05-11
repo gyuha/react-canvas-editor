@@ -29,7 +29,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
 
   return (
     <div style={{ width }}>
-      <Toolbar />
+      <Toolbar canvas={paper.current} />
       <canvas ref={canvas} id={id} />
     </div>
   );
