@@ -29,6 +29,18 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
     canvas().add(rect);
   };
 
+  const addCircle = () => {
+    const rect = new fabric.Circle({
+      left: 100,
+      top: 100,
+      fill: '#eee',
+      radius: 50,
+      strokeWidth: 1,
+      stroke: '#bbb',
+    });
+    canvas().add(rect);
+  };
+
   const addText = () => {
     const text = new fabric.Textbox('textbox', {
       fontSize: 20,
@@ -54,7 +66,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       <div className="item" onClick={() => addRect()}>
         <FaRegSquare />
       </div>
-      <div className="item" onClick={() => addRect()}>
+      <div className="item" onClick={() => addCircle()}>
         <FaRegCircle />
       </div>
       <div className="item">
