@@ -28,30 +28,17 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
         canvas().renderAll();
       }
     );
-    // canvas().setBackgroundImage(
-    //   'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
-    //   canvas().renderAll.bind(canvas()),
-    //   {
-    //     width: canvas().width,
-    //     height: canvas().height,
-    //     originX: 'left',
-    //     originY: 'top',
-    //     crossOrigin: 'anonymous',
-    //   }
-    // );
-    // fabric.Image.fromURL(
-    //   'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
-    //   (img) => {
-    //     img.set({
-    //       originX: 'left',
-    //       originY: 'top',
-    //       width: canvas().getWidth(),
-    //       height: canvas().getHeight(),
-    //     });
-    //     canvas().setBackgroundImage(img, canvas().renderAll.bind(canvas()), {});
-    //   }
-    // );
   };
+
+  const addImage = () => {
+    fabric.Image.fromURL(
+      'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
+      (img) => {
+        canvas().add(img);
+      }
+    );
+  };
+
   const addRect = () => {
     const rect = new fabric.Rect({
       left: 100,
@@ -88,12 +75,23 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
     canvas().add(text);
   };
 
+  const eraseActive = () => {
+    const objects = canvas().getActiveObjects();
+    if (objects.length) {
+      objects.forEach((obj: any) => {
+        canvas().remove(obj);
+      });
+    }
+    canvas().discardActiveObject();
+    canvas().renderAll();
+  };
+
   return (
     <div className="toolbar">
       <div className="item" onClick={() => setBackgroundImage()}>
         <FaImage />
       </div>
-      <div className="item">
+      <div className="item" onClick={() => addImage()}>
         <FaImages />
       </div>
       <div className="item" onClick={() => addText()}>
@@ -105,7 +103,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       <div className="item" onClick={() => addCircle()}>
         <FaRegCircle />
       </div>
-      <div className="item">
+      <div className="item" onClick={() => eraseActive()}>
         <FaEraser />
       </div>
       <div className="item item-left">
