@@ -16,6 +16,42 @@ type ToolbarProps = {
 };
 
 const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null => {
+  const setBackgroundImage = () => {
+    canvas().setBackgroundImage(
+      'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
+      () => {
+        const img = canvas().backgroundImage as fabric.Image;
+        img.originX = 'left';
+        img.originY = 'top';
+        img.scaleX = canvas().getWidth() / Number(img.width);
+        img.scaleY = canvas().getHeight() / Number(img.height);
+        canvas().renderAll();
+      }
+    );
+    // canvas().setBackgroundImage(
+    //   'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
+    //   canvas().renderAll.bind(canvas()),
+    //   {
+    //     width: canvas().width,
+    //     height: canvas().height,
+    //     originX: 'left',
+    //     originY: 'top',
+    //     crossOrigin: 'anonymous',
+    //   }
+    // );
+    // fabric.Image.fromURL(
+    //   'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
+    //   (img) => {
+    //     img.set({
+    //       originX: 'left',
+    //       originY: 'top',
+    //       width: canvas().getWidth(),
+    //       height: canvas().getHeight(),
+    //     });
+    //     canvas().setBackgroundImage(img, canvas().renderAll.bind(canvas()), {});
+    //   }
+    // );
+  };
   const addRect = () => {
     const rect = new fabric.Rect({
       left: 100,
@@ -54,7 +90,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
 
   return (
     <div className="toolbar">
-      <div className="item">
+      <div className="item" onClick={() => setBackgroundImage()}>
         <FaImage />
       </div>
       <div className="item">
