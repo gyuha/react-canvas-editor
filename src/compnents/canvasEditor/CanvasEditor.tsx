@@ -1,8 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/tabindex-no-positive */
+import events from 'events';
 import { fabric } from 'fabric';
 import React, { useState, useEffect, useRef } from 'react';
 import Toolbar from './Toolbar';
+
+export interface ICanvas extends fabric.Canvas {
+  removeActiveObjects: () => void;
+  quickClone: () => void;
+}
 
 type CanvasEditorProps = {
   id: string; //! 캠버스 아이디
@@ -18,14 +24,18 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
   const [activeObject, setActiveObject] = useState<any>(null);
 
   const onSelect = (e: any) => {
-    if (paper.current.getActiveObject().length === 1) {
-      setActiveObject(e.target);
-    } else {
-      setActiveObject(null);
+    try {
+      if (paper.current.getActiveObject().length === 1) {
+        setActiveObject(e.target);
+      } else {
+        setActiveObject(null);
+      }
+    } catch (err: any) {
+      console.log(err);
     }
   };
 
-  const removeActiveObject = () => {
+  const removeActiveObjects = () => {
     paper.current.getActiveObjects().forEach((obj: any) => {
       paper.current.remove(obj);
     });
@@ -76,12 +86,65 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     }
   };
 
+  const quickClone = () => {
+    const currentObject = paper.current.getActiveObject();
+    if (!currentObject) {
+      return;
+    }
+
+    currentObject.clone((cloned: any) => {
+      paper.current.discardActiveObject();
+      cloned.set({
+        left: cloned.left + 10,
+        top: cloned.top + 10,
+        evented: true,
+      });
+      if (cloned.type === 'activeSelection') {
+        // active selection needs a reference to the canvas.
+        cloned.canvas = paper.current;
+        cloned.forEachObject((obj: any) => {
+          paper.current.add(obj);
+        });
+        // this should solve the unselectability
+        cloned.setCoords();
+      } else {
+        paper.current.add(cloned);
+      }
+      // render
+      paper.current.setActiveObject(cloned);
+      paper.current.requestRenderAll();
+    });
+  };
+
+  const selectAll = () => {
+    paper.current.discardActiveObject();
+    const sel = new fabric.ActiveSelection(paper.current.getObjects(), {
+      canvas: paper.current,
+    });
+    paper.current.setActiveObject(sel);
+    paper.current.requestRenderAll();
+  };
+
+  const activeObjectMove = (x: number, y: number) => {
+    const sel = paper.current.getActiveObject();
+    sel.set({
+      left: sel.left + x,
+      top: sel.top + y,
+      evented: true,
+    });
+    paper.current.renderAll();
+  };
+
   // keyboard events
   const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log('📢[CanvasEditor.tsx:36]:', e);
+    // console.log('📢[CanvasEditor.tsx:140]:', e.code);
+    let step = 10;
+    if (e.shiftKey) {
+      step = 1;
+    }
     switch (e.code) {
       case 'Delete':
-        removeActiveObject();
+        removeActiveObjects();
         break;
       case 'KeyC':
         if (e.ctrlKey) {
@@ -92,6 +155,23 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
         if (e.ctrlKey) {
           paste();
         }
+        break;
+      case 'KeyA':
+        if (e.ctrlKey) {
+          selectAll();
+        }
+        break;
+      case 'ArrowUp':
+        activeObjectMove(0, -step);
+        break;
+      case 'ArrowDown':
+        activeObjectMove(0, step);
+        break;
+      case 'ArrowLeft':
+        activeObjectMove(-step, 0);
+        break;
+      case 'ArrowRight':
+        activeObjectMove(step, 0);
         break;
       //   case 66:
       //     // b -> toggle group/ungroup
@@ -110,6 +190,8 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     paper.current = new fabric.Canvas(id, { width, height, backgroundColor: 'pink' });
     paper.current.on('selection:updated', onSelect);
     paper.current.on('selection:created', onSelect);
+    paper.current.removeActiveObjects = removeActiveObjects;
+    paper.current.quickClone = quickClone;
   }, []);
 
   return (

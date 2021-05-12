@@ -85,7 +85,8 @@
     "no-nested-ternary": "off",
     "no-debugger": "off",
     "no-useless-catch": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "import/resolver": {

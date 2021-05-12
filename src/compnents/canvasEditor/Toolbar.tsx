@@ -6,13 +6,15 @@ import {
   FaRegSquare,
   FaRegCircle,
   FaEraser,
+  FaRegClone,
   FaRegSave,
   FaFont,
 } from 'react-icons/fa';
 import { fabric } from 'fabric';
+import { ICanvas } from './CanvasEditor';
 
 type ToolbarProps = {
-  getCanvas: () => fabric.Canvas;
+  getCanvas: () => ICanvas;
 };
 
 const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null => {
@@ -50,10 +52,11 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       stroke: '#bbb',
     });
     canvas().add(rect);
+    canvas().setActiveObject(rect);
   };
 
   const addCircle = () => {
-    const rect = new fabric.Circle({
+    const circle = new fabric.Circle({
       left: 100,
       top: 100,
       fill: '#eee',
@@ -61,11 +64,12 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       strokeWidth: 1,
       stroke: '#bbb',
     });
-    canvas().add(rect);
+    canvas().add(circle);
+    canvas().setActiveObject(circle);
   };
 
   const addText = () => {
-    const text = new fabric.Textbox('textbox', {
+    const text = new fabric.Textbox('Text Input', {
       fontSize: 20,
       left: 100,
       top: 100,
@@ -73,17 +77,9 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       width: 100,
     });
     canvas().add(text);
-  };
-
-  const eraseActive = () => {
-    const objects = canvas().getActiveObjects();
-    if (objects.length) {
-      objects.forEach((obj: any) => {
-        canvas().remove(obj);
-      });
-    }
-    canvas().discardActiveObject();
-    canvas().renderAll();
+    canvas().setActiveObject(text);
+    text.selectAll();
+    text.enterEditing();
   };
 
   return (
@@ -103,7 +99,10 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       <div className="item" onClick={() => addCircle()}>
         <FaRegCircle />
       </div>
-      <div className="item" onClick={() => eraseActive()}>
+      <div className="item" onClick={() => canvas().quickClone()}>
+        <FaRegClone />
+      </div>
+      <div className="item" onClick={() => canvas().removeActiveObjects()}>
         <FaEraser />
       </div>
       <div className="item item-left">
