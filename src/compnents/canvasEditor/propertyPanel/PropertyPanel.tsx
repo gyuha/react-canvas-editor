@@ -14,11 +14,10 @@ import InputRange from './InputRange';
 
 type PropertyPanelProps = {
   canvas: () => ICanvas;
-  activeObject: fabric.Object;
+  activeObject: any;
 };
 
 const getPanelPosition = (object: any, canvas: any): { left?: number; top?: number } => {
-  console.log('📢[PropertyPanel.tsx:12]:', object);
   if (!object) {
     return {};
   }
@@ -36,11 +35,19 @@ const getPanelPosition = (object: any, canvas: any): { left?: number; top?: numb
 
 const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.ReactElement | null => {
   const position = getPanelPosition(activeObject, canvas());
-  const [fillColor, setFillColor] = useState(activeObject.fill as string);
+  const [, setFillColor] = useState(activeObject.fill as string);
+  const [, setFontSize] = useState(20);
 
   const onChangeFillColor = (newColor: string) => {
     setFillColor(newColor);
     activeObject.set({ fill: newColor });
+    canvas().renderAll();
+  };
+
+  const onChangeFontSize = (size: number) => {
+    // @ts-ignore
+    activeObject.set({ fontSize: size });
+    setFontSize(size);
     canvas().renderAll();
   };
 
@@ -49,7 +56,13 @@ const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.Reac
       {activeObject.fill && (
         <FillColor color={activeObject.fill as string} onChange={onChangeFillColor} />
       )}
-      <InputRange min={1} max={100} step={1} onChange={(e) => console.log(e)} value={1} />
+      <InputRange
+        min={1}
+        max={100}
+        step={1}
+        onChange={(e) => onChangeFontSize(e)}
+        value={activeObject.fontSize}
+      />
       <div className="item" onClick={() => canvas().sendTo('back')}>
         <FaAngleDoubleDown />
       </div>
