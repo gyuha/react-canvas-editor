@@ -5,10 +5,12 @@ import {
   FaAngleDown,
   FaAngleUp,
   FaAngleDoubleUp,
+  FaRegClone,
 } from 'react-icons/fa';
 import { ICanvas } from '../CanvasEditor';
 import '../sass/_panel.scss';
 import FillColor from './FillColor';
+import InputRange from './InputRange';
 
 type PropertyPanelProps = {
   canvas: () => ICanvas;
@@ -44,21 +46,27 @@ const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.Reac
 
   return (
     <div className="rce-property-panel" style={position}>
-      {activeObject.fill && <FillColor color={fillColor} onChange={onChangeFillColor} />}
-      <div className="item">
-        <FaAngleDoubleDown onClick={() => canvas().sendTo('back')} />
+      {activeObject.fill && (
+        <FillColor color={activeObject.fill as string} onChange={onChangeFillColor} />
+      )}
+      <InputRange min={1} max={100} step={1} onChange={(e) => console.log(e)} value={1} />
+      <div className="item" onClick={() => canvas().sendTo('back')}>
+        <FaAngleDoubleDown />
       </div>
-      <div className="item">
-        <FaAngleDown onClick={() => canvas().sendTo('backwards')} />
+      <div className="item" onClick={() => canvas().sendTo('backwards')}>
+        <FaAngleDown />
       </div>
-      <div className="item">
-        <FaAngleUp onClick={() => canvas().sendTo('forward')} />
+      <div className="item" onClick={() => canvas().sendTo('forward')}>
+        <FaAngleUp />
       </div>
-      <div className="item">
-        <FaAngleDoubleUp onClick={() => canvas().sendTo('front')} />
+      <div className="item" onClick={() => canvas().sendTo('front')}>
+        <FaAngleDoubleUp />
       </div>
-      <div className="item">
-        <FaTrash onClick={() => canvas().removeActiveObjects()} />
+      <div className="item" onClick={() => canvas().quickClone()}>
+        <FaRegClone />
+      </div>
+      <div className="item" onClick={() => canvas().removeActiveObjects()}>
+        <FaTrash />
       </div>
     </div>
   );

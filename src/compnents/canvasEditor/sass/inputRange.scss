@@ -1,0 +1,35 @@
+.rce {
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #d5d4d3;
+    cursor: pointer;
+    border-radius: 0; /* iOS */
+    transition: background 450ms ease-in;
+  }
+
+  input[type=range]:focus {
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 1px solid dodgerblue;
+    border-radius:50%;
+    cursor: pointer;
+  }
+
+  input[type=range]::-moz-range-thumb{
+    -webkit-appearance: none;
+    width:10px;
+    height:10px;
+    background: #fff;
+    border: 1px solid dodgerblue;
+    border-radius:50%;
+    cursor: pointer;
+  }
+}
