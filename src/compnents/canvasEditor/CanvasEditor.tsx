@@ -158,7 +158,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     const sel = paper.current.getActiveObject();
     switch (type) {
       case 'back':
-        sel.sendBackwards();
+        sel.sendToBack();
         break;
       case 'backwards':
         sel.sendBackwards();

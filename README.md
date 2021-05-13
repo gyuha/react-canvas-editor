@@ -28,6 +28,7 @@
 - [ ] property panel show / hide 
   - [ ] Basic panel
     - [ ] delete
+  - [x] fill color change
   - [ ] react
   - [ ] cricle 
   - [ ] text 
