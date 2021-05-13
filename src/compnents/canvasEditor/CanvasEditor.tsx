@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/tabindex-no-positive */
-import events from 'events';
 import { fabric } from 'fabric';
 import React, { useState, useEffect, useRef } from 'react';
 import PropertyPanel from './propertyPanel/PropertyPanel';
@@ -13,9 +12,12 @@ fabric.Object.prototype.set({
   cornerStyle: 'circle',
 });
 
+type SendTo = 'back' | 'backwards' | 'forward' | 'front';
+
 export interface ICanvas extends fabric.Canvas {
   removeActiveObjects: () => void;
   quickClone: () => void;
+  sendTo: (send: SendTo) => void;
 }
 
 type CanvasEditorProps = {
@@ -154,7 +156,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     paper.current.renderAll();
   };
 
-  const sendTo = (type: 'back' | 'backwards' | 'forward' | 'front'): void => {
+  const sendTo = (type: SendTo): void => {
     const sel = paper.current.getActiveObject();
     switch (type) {
       case 'back':
@@ -262,6 +264,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
 
     paper.current.removeActiveObjects = removeActiveObjects;
     paper.current.quickClone = quickClone;
+    paper.current.sendTo = sendTo;
   }, []);
 
   return (

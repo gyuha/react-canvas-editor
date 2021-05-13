@@ -1,4 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import {
+  FaTrash,
+  FaAngleDoubleDown,
+  FaAngleDown,
+  FaAngleUp,
+  FaAngleDoubleUp,
+} from 'react-icons/fa';
 import { ICanvas } from '../CanvasEditor';
 import '../sass/_panel.scss';
 import FillColor from './FillColor';
@@ -38,6 +45,21 @@ const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.Reac
   return (
     <div className="rce-property-panel" style={position}>
       {activeObject.fill && <FillColor color={fillColor} onChange={onChangeFillColor} />}
+      <div className="item">
+        <FaAngleDoubleDown onClick={() => canvas().sendTo('back')} />
+      </div>
+      <div className="item">
+        <FaAngleDown onClick={() => canvas().sendTo('backwards')} />
+      </div>
+      <div className="item">
+        <FaAngleUp onClick={() => canvas().sendTo('forward')} />
+      </div>
+      <div className="item">
+        <FaAngleDoubleUp onClick={() => canvas().sendTo('front')} />
+      </div>
+      <div className="item">
+        <FaTrash onClick={() => canvas().removeActiveObjects()} />
+      </div>
     </div>
   );
 };

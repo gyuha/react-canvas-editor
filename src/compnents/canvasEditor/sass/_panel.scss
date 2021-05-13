@@ -8,4 +8,15 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   padding: $spacing;
   outline: 0;
+  display: flex;
+
+  .item {
+    color: $toolbar-color;
+    flex: none;
+    margin: 5px;
+    padding:5px;
+    border: solid 1px $toolbar-border-color;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 }

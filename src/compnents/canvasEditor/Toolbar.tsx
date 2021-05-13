@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import './sass/_canvas.scss';
+import { fabric } from 'fabric';
+import React from 'react';
 import {
+  FaFont,
   FaImage,
   FaImages,
-  FaRegSquare,
   FaRegCircle,
-  FaEraser,
   FaRegClone,
   FaRegSave,
-  FaFont,
+  FaRegSquare,
+  FaTrash,
 } from 'react-icons/fa';
-import { fabric } from 'fabric';
 import { ICanvas } from './CanvasEditor';
+import './sass/_toolbar.scss';
 
 type ToolbarProps = {
   getCanvas: () => ICanvas;
@@ -34,8 +34,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
 
   const addImage = () => {
     fabric.Image.fromURL(
-      // 'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/A_TransGender-Symbol_Plain3.svg/480px-A_TransGender-Symbol_Plain3.svg.png',
+      'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
       (img) => {
         canvas().add(img);
       }
@@ -104,7 +103,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
         <FaRegClone />
       </div>
       <div className="item" onClick={() => canvas().removeActiveObjects()}>
-        <FaEraser />
+        <FaTrash />
       </div>
       <div className="item item-left">
         <FaRegSave />
