@@ -3,6 +3,7 @@
 import events from 'events';
 import { fabric } from 'fabric';
 import React, { useState, useEffect, useRef } from 'react';
+import PropertyPanel from './propertyPanel/PropertyPanel';
 import Toolbar from './Toolbar';
 
 fabric.Object.prototype.set({
@@ -32,7 +33,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
 
   const onSelect = (e: any) => {
     try {
-      if (paper.current.getActiveObject().length === 1) {
+      if (paper.current.getActiveObjects().length === 1) {
         setActiveObject(e.target);
       } else {
         setActiveObject(null);
@@ -237,8 +238,10 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
       backgroundColor: 'pink',
     });
 
+    paper.current.on('selection:cleared', () => setActiveObject(null));
     paper.current.on('selection:updated', onSelect);
     paper.current.on('selection:created', onSelect);
+
     paper.current.removeActiveObjects = removeActiveObjects;
     paper.current.quickClone = quickClone;
   }, []);
@@ -247,6 +250,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     <div style={{ width }} tabIndex={1000} onKeyUp={onKeyUp}>
       <Toolbar getCanvas={() => paper.current} />
       <canvas ref={canvas} id={id} />
+      {activeObject && <PropertyPanel activeObject={activeObject} canvas={() => paper.current} />}
     </div>
   );
 };

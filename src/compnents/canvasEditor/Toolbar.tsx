@@ -83,7 +83,7 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
   };
 
   return (
-    <div className="toolbar">
+    <div className="rce-toolbar">
       <div className="item" onClick={() => setBackgroundImage()}>
         <FaImage />
       </div>
