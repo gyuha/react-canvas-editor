@@ -28,7 +28,6 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
   const canvas = useRef<HTMLCanvasElement>(null);
   const paper = useRef<any>(null);
   const [clipboard, setClipboard] = useState<any>(null);
-  const [dirty, setDirty] = useState(false);
   const [activeObject, setActiveObject] = useState<any>(null);
 
   const onSelect = (e: any) => {
@@ -40,6 +39,18 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
       }
     } catch (err: any) {
       console.log(err);
+    }
+  };
+
+  const onMove = (e: any) => {
+    if (paper.current.getActiveObjects().length === 1) {
+      setActiveObject(null);
+    }
+  };
+
+  const onMoved = (e: any) => {
+    if (paper.current.getActiveObjects().length === 1) {
+      setActiveObject(e.target);
     }
   };
 
@@ -241,6 +252,13 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     paper.current.on('selection:cleared', () => setActiveObject(null));
     paper.current.on('selection:updated', onSelect);
     paper.current.on('selection:created', onSelect);
+
+    paper.current.on('object:moving', onMove);
+    paper.current.on('object:scaling', onMove);
+    paper.current.on('object:rotating', onMove);
+    paper.current.on('object:moved', onMoved);
+    paper.current.on('object:scaled', onMoved);
+    paper.current.on('object:rotated', onMoved);
 
     paper.current.removeActiveObjects = removeActiveObjects;
     paper.current.quickClone = quickClone;
