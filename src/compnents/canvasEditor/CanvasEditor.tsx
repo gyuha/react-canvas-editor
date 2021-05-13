@@ -5,6 +5,13 @@ import { fabric } from 'fabric';
 import React, { useState, useEffect, useRef } from 'react';
 import Toolbar from './Toolbar';
 
+fabric.Object.prototype.set({
+  transparentCorners: false,
+  borderColor: '#da00da',
+  cornerColor: '#ff1919',
+  cornerStyle: 'circle',
+});
+
 export interface ICanvas extends fabric.Canvas {
   removeActiveObjects: () => void;
   quickClone: () => void;
@@ -229,6 +236,7 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
       height,
       backgroundColor: 'pink',
     });
+
     paper.current.on('selection:updated', onSelect);
     paper.current.on('selection:created', onSelect);
     paper.current.removeActiveObjects = removeActiveObjects;
