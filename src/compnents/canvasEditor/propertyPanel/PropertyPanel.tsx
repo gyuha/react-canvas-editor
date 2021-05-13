@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ICanvas } from './CanvasEditor';
+import { ICanvas } from '../CanvasEditor';
 
 type PropertyPanelProps = {
   canvas: () => ICanvas;

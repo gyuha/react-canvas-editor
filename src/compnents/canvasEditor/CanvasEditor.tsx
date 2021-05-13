@@ -135,6 +135,26 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
     paper.current.renderAll();
   };
 
+  const sendTo = (type: 'back' | 'backwards' | 'forward' | 'front'): void => {
+    const sel = paper.current.getActiveObject();
+    switch (type) {
+      case 'back':
+        sel.sendBackwards();
+        break;
+      case 'backwards':
+        sel.sendBackwards();
+        break;
+      case 'forward':
+        sel.bringForward();
+        break;
+      case 'front':
+        sel.bringToFront();
+        break;
+      default:
+        break;
+    }
+  };
+
   // keyboard events
   const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // console.log('📢[CanvasEditor.tsx:140]:', e.code);
@@ -162,9 +182,25 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
         }
         break;
       case 'ArrowUp':
+        if (e.ctrlKey && e.shiftKey) {
+          sendTo('front');
+          return;
+        }
+        if (e.ctrlKey) {
+          sendTo('forward');
+          return;
+        }
         activeObjectMove(0, -step);
         break;
       case 'ArrowDown':
+        if (e.ctrlKey && e.shiftKey) {
+          sendTo('back');
+          return;
+        }
+        if (e.ctrlKey) {
+          sendTo('backwards');
+          return;
+        }
         activeObjectMove(0, step);
         break;
       case 'ArrowLeft':
@@ -187,7 +223,12 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
   };
 
   useEffect(() => {
-    paper.current = new fabric.Canvas(id, { width, height, backgroundColor: 'pink' });
+    paper.current = new fabric.Canvas(id, {
+      preserveObjectStacking: true,
+      width,
+      height,
+      backgroundColor: 'pink',
+    });
     paper.current.on('selection:updated', onSelect);
     paper.current.on('selection:created', onSelect);
     paper.current.removeActiveObjects = removeActiveObjects;
