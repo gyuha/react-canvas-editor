@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ICanvas } from '../CanvasEditor';
 import '../sass/_panel.scss';
+import FillColor from './FillColor';
 
 type PropertyPanelProps = {
   canvas: () => ICanvas;
@@ -26,10 +27,17 @@ const getPanelPosition = (object: any, canvas: any): { left?: number; top?: numb
 
 const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.ReactElement | null => {
   const position = getPanelPosition(activeObject, canvas());
+  const [fillColor, setFillColor] = useState(activeObject.fill as string);
+
+  const onChangeFillColor = (newColor: string) => {
+    setFillColor(newColor);
+    activeObject.set({ fill: newColor });
+    canvas().renderAll();
+  };
 
   return (
     <div className="rce-property-panel" style={position}>
-      text
+      {activeObject.fill && <FillColor color={fillColor} onChange={onChangeFillColor} />}
     </div>
   );
 };
