@@ -15,6 +15,8 @@
   - [x] Shift + [up|down|left|right] : move to direction(1 pixel step)
   - [x] Ctrl + [up|down] : move to forward or backward
   - [x] Ctrl + Shift + [up|down] : move to back or front
+  - [x] Ctrl + z : undo
+  - [x] Ctrl + Shift + z : redo
 - [ ] Toolbar
   - [ ] set background image (will be to change image)
   - [ ] add image (will be to change image)
@@ -23,15 +25,23 @@
   - [x] add text
   - [x] clone object
   - [x] delete object
-  - [ ] object send to forward or back
+  - [x] object send to forward or back
   - [ ] save image
 - [ ] property panel show / hide 
+  - [ ] slider component
   - [ ] Basic panel
     - [ ] delete
   - [x] fill color change
+  - [ ] line color change
+  - [ ] text
+    - [ ] font change
+    - [ ] italic
+    - [ ] bold
+    - [ ] underbar
+    - [ ] size
   - [ ] react
   - [ ] cricle 
   - [ ] text 
   - [ ] image
-- [ ] undo / redo
-- [ ] object click and drop function
+- [x] undo / redo
+- [x] object click and drop function
