@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/tabindex-no-positive */
 import { fabric } from 'fabric';
+import 'fabric-history';
 import React, { useState, useEffect, useRef } from 'react';
 import PropertyPanel from './propertyPanel/PropertyPanel';
 import Toolbar from './Toolbar';
@@ -18,6 +19,8 @@ export interface ICanvas extends fabric.Canvas {
   removeActiveObjects: () => void;
   quickClone: () => void;
   sendTo: (send: SendTo) => void;
+  undo: () => void;
+  redo: () => void;
 }
 
 type CanvasEditorProps = {
@@ -229,6 +232,13 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
         break;
       case 'ArrowRight':
         activeObjectMove(step, 0);
+        break;
+      case 'KeyZ':
+        if (e.ctrlKey && e.shiftKey) {
+          paper.current.redo();
+        } else if (e.ctrlKey) {
+          paper.current.undo();
+        }
         break;
       //   case 66:
       //     // b -> toggle group/ungroup

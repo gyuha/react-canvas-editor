@@ -8,6 +8,8 @@ import {
   FaRegClone,
   FaRegSave,
   FaRegSquare,
+  FaRedoAlt,
+  FaUndoAlt,
   FaTrash,
 } from 'react-icons/fa';
 import { ICanvas } from './CanvasEditor';
@@ -101,6 +103,12 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       </div>
       <div className="item" onClick={() => canvas().quickClone()}>
         <FaRegClone />
+      </div>
+      <div className="item" onClick={() => canvas().undo()}>
+        <FaUndoAlt />
+      </div>
+      <div className="item" onClick={() => canvas().redo()}>
+        <FaRedoAlt />
       </div>
       <div className="item" onClick={() => canvas().removeActiveObjects()}>
         <FaTrash />
