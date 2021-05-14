@@ -7,13 +7,13 @@ import {
   FaAngleDoubleUp,
   FaRegClone,
 } from 'react-icons/fa';
-import { ICanvas } from '../CanvasEditor';
+import { FabricCanvas } from '../FabricCanvas';
 import '../sass/_panel.scss';
 import FillColor from './FillColor';
 import InputRange from './InputRange';
 
 type PropertyPanelProps = {
-  canvas: () => ICanvas;
+  fabricCanvas: any;
   activeObject: any;
 };
 
@@ -33,22 +33,27 @@ const getPanelPosition = (object: any, canvas: any): { left?: number; top?: numb
   };
 };
 
-const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.ReactElement | null => {
-  const position = getPanelPosition(activeObject, canvas());
+const PropertyPanel = ({
+  activeObject,
+  fabricCanvas,
+}: PropertyPanelProps): React.ReactElement | null => {
+  const position = getPanelPosition(activeObject, fabricCanvas.canvas);
   const [, setFillColor] = useState(activeObject.fill as string);
   const [, setFontSize] = useState(20);
+
+  const { canvas } = fabricCanvas;
 
   const onChangeFillColor = (newColor: string) => {
     setFillColor(newColor);
     activeObject.set({ fill: newColor });
-    canvas().renderAll();
+    canvas.renderAll();
   };
 
   const onChangeFontSize = (size: number) => {
     // @ts-ignore
     activeObject.set({ fontSize: size });
     setFontSize(size);
-    canvas().renderAll();
+    canvas.renderAll();
   };
 
   return (
@@ -63,22 +68,22 @@ const PropertyPanel = ({ activeObject, canvas }: PropertyPanelProps): React.Reac
         onChange={(e) => onChangeFontSize(e)}
         value={activeObject.fontSize}
       />
-      <div className="item" onClick={() => canvas().sendTo('back')}>
+      <div className="item" onClick={() => fabricCanvas.sendTo('back')}>
         <FaAngleDoubleDown />
       </div>
-      <div className="item" onClick={() => canvas().sendTo('backwards')}>
+      <div className="item" onClick={() => fabricCanvas.sendTo('backwards')}>
         <FaAngleDown />
       </div>
-      <div className="item" onClick={() => canvas().sendTo('forward')}>
+      <div className="item" onClick={() => fabricCanvas.sendTo('forward')}>
         <FaAngleUp />
       </div>
-      <div className="item" onClick={() => canvas().sendTo('front')}>
+      <div className="item" onClick={() => fabricCanvas.sendTo('front')}>
         <FaAngleDoubleUp />
       </div>
-      <div className="item" onClick={() => canvas().quickClone()}>
+      <div className="item" onClick={() => fabricCanvas.quickClone()}>
         <FaRegClone />
       </div>
-      <div className="item" onClick={() => canvas().removeActiveObjects()}>
+      <div className="item" onClick={() => fabricCanvas.removeActiveObjects()}>
         <FaTrash />
       </div>
     </div>

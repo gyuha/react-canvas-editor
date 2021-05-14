@@ -12,38 +12,42 @@ import {
   FaUndoAlt,
   FaTrash,
 } from 'react-icons/fa';
-import { ICanvas } from './CanvasEditor';
+import { FabricCanvas } from './FabricCanvas';
 import './sass/_toolbar.scss';
 
 type ToolbarProps = {
-  getCanvas: () => ICanvas;
+  fabricCanvas: () => FabricCanvas;
 };
 
-const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null => {
+const Toolbar = ({ fabricCanvas }: ToolbarProps): React.ReactElement | null => {
   const setBackgroundImage = () => {
-    canvas().setBackgroundImage(
+    const { canvas } = fabricCanvas();
+    fabricCanvas().canvas?.setBackgroundImage(
       'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
       () => {
-        const img = canvas().backgroundImage as fabric.Image;
+        const img = canvas.backgroundImage as fabric.Image;
         img.originX = 'left';
         img.originY = 'top';
-        img.scaleX = canvas().getWidth() / Number(img.width);
-        img.scaleY = canvas().getHeight() / Number(img.height);
-        canvas().renderAll();
+        img.scaleX = canvas.getWidth() / Number(img.width);
+        img.scaleY = canvas.getHeight() / Number(img.height);
+        canvas.renderAll();
       }
     );
   };
 
   const addImage = () => {
+    const { canvas } = fabricCanvas();
     fabric.Image.fromURL(
       'https://ichef.bbci.co.uk/news/976/cpsprodpb/13729/production/_112375697_1331db7a-17c0-4401-8cac-6a2309ff49b6.jpg',
       (img) => {
-        canvas().add(img);
+        canvas?.add(img);
+        canvas?.renderAll();
       }
     );
   };
 
   const addRect = () => {
+    const { canvas } = fabricCanvas();
     const rect = new fabric.Rect({
       left: 100,
       top: 100,
@@ -53,11 +57,12 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       strokeWidth: 1,
       stroke: '#bbb',
     });
-    canvas().add(rect);
-    canvas().setActiveObject(rect);
+    canvas?.add(rect);
+    canvas?.setActiveObject(rect);
   };
 
   const addCircle = () => {
+    const { canvas } = fabricCanvas();
     const circle = new fabric.Circle({
       left: 100,
       top: 100,
@@ -66,11 +71,12 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       strokeWidth: 1,
       stroke: '#bbb',
     });
-    canvas().add(circle);
-    canvas().setActiveObject(circle);
+    canvas?.add(circle);
+    canvas?.setActiveObject(circle);
   };
 
   const addText = () => {
+    const { canvas } = fabricCanvas();
     const text = new fabric.Textbox('Text Input', {
       fontSize: 20,
       left: 100,
@@ -78,8 +84,8 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       fill: '#000000',
       width: 100,
     });
-    canvas().add(text);
-    canvas().setActiveObject(text);
+    canvas.add(text);
+    canvas.setActiveObject(text);
     text.selectAll();
     text.enterEditing();
   };
@@ -101,16 +107,16 @@ const Toolbar = ({ getCanvas: canvas }: ToolbarProps): React.ReactElement | null
       <div className="item" onClick={() => addCircle()}>
         <FaRegCircle />
       </div>
-      <div className="item" onClick={() => canvas().quickClone()}>
+      <div className="item" onClick={() => fabricCanvas().quickClone()}>
         <FaRegClone />
       </div>
-      <div className="item" onClick={() => canvas().undo()}>
+      <div className="item" onClick={() => fabricCanvas().undo()}>
         <FaUndoAlt />
       </div>
-      <div className="item" onClick={() => canvas().redo()}>
+      <div className="item" onClick={() => fabricCanvas().redo()}>
         <FaRedoAlt />
       </div>
-      <div className="item" onClick={() => canvas().removeActiveObjects()}>
+      <div className="item" onClick={() => fabricCanvas().removeActiveObjects()}>
         <FaTrash />
       </div>
       <div className="item item-left">
