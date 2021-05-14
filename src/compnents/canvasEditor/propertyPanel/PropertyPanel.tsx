@@ -39,22 +39,11 @@ const PropertyPanel = ({
   fabricCanvas,
 }: PropertyPanelProps): React.ReactElement | null => {
   const position = getPanelPosition(activeObject, fabricCanvas().canvas);
-  const [, setFillColor] = useState(activeObject.fill as string);
-  const [, setFontSize] = useState(20);
-
-  const onChangeFillColor = (newColor: string) => {
-    const { canvas } = fabricCanvas();
-    setFillColor(newColor);
-    activeObject.set({ fill: newColor });
-    canvas.renderAll();
-  };
-
-  console.log('📢[PropertyPanel.tsx:42]:', activeObject);
 
   return (
     <div className="rce-property-panel" style={position}>
       {activeObject.fill && (
-        <FillColor color={activeObject.fill as string} onChange={onChangeFillColor} />
+        <FillColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
       {activeObject.fontSize && (
         <FontSize canvas={fabricCanvas().canvas} activeObject={activeObject} />

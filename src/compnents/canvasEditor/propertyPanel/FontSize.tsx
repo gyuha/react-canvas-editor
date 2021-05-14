@@ -29,7 +29,7 @@ const FontSize = ({ canvas, activeObject }: FontSizeProps): React.ReactElement |
       <ImFontSize onClick={() => setIsOpen(true)} />
       {isOpen && (
         <div className="popover input-range" ref={popover}>
-          <InputRange min={1} max={100} value={activeObject.fontSize} onChange={onChange} />
+          <InputRange min={5} max={100} value={activeObject.fontSize} onChange={onChange} />
         </div>
       )}
     </div>
