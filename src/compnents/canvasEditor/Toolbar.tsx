@@ -13,7 +13,7 @@ import {
   FaTrash,
 } from 'react-icons/fa';
 import { FabricCanvas } from './FabricCanvas';
-import './sass/_toolbar.scss';
+import './sass/toolbar.scss';
 
 type ToolbarProps = {
   fabricCanvas: () => FabricCanvas;

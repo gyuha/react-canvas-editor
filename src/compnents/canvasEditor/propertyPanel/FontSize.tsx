@@ -1,12 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { ImFontSize } from 'react-icons/im';
+import useClickOutside from '../hooks/useClickOutside';
+import '../sass/panel.scss';
+import InputRange from './InputRange';
 
 type FontSizeProps = {
-  value: number;
-  onChange: (value: number) => void;
+  canvas: fabric.Canvas;
+  activeObject: fabric.TextOptions;
 };
 
-const FontSize = ({ value, onChange }: FontSizeProps): React.ReactElement | null => {
-  return <></>;
+const FontSize = ({ canvas, activeObject }: FontSizeProps): React.ReactElement | null => {
+  const popover = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [, setFontSize] = useState(0);
+
+  const close = useCallback(() => setIsOpen(false), []);
+
+  useClickOutside(popover, close);
+
+  const onChange = (value: number) => {
+    setFontSize(value);
+    activeObject.fontSize = value;
+    canvas.renderAll();
+  };
+
+  return (
+    <div className="item picker">
+      <ImFontSize onClick={() => setIsOpen(true)} />
+      {isOpen && (
+        <div className="popover input-range" ref={popover}>
+          <InputRange min={1} max={100} value={activeObject.fontSize} onChange={onChange} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 FontSize.defaultProps = {} as FontSizeProps;

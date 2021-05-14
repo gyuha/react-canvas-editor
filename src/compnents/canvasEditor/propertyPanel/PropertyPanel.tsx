@@ -8,8 +8,9 @@ import {
   FaRegClone,
 } from 'react-icons/fa';
 import { FabricCanvas } from '../FabricCanvas';
-import '../sass/_panel.scss';
+import '../sass/panel.scss';
 import FillColor from './FillColor';
+import FontSize from './FontSize';
 import InputRange from './InputRange';
 
 type PropertyPanelProps = {
@@ -48,26 +49,16 @@ const PropertyPanel = ({
     canvas.renderAll();
   };
 
-  const onChangeFontSize = (size: number) => {
-    const { canvas } = fabricCanvas();
-    // @ts-ignore
-    activeObject.set({ fontSize: size });
-    setFontSize(size);
-    canvas.renderAll();
-  };
+  console.log('📢[PropertyPanel.tsx:42]:', activeObject);
 
   return (
     <div className="rce-property-panel" style={position}>
       {activeObject.fill && (
         <FillColor color={activeObject.fill as string} onChange={onChangeFillColor} />
       )}
-      <InputRange
-        min={1}
-        max={100}
-        step={1}
-        onChange={(e) => onChangeFontSize(e)}
-        value={activeObject.fontSize}
-      />
+      {activeObject.fontSize && (
+        <FontSize canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      )}
       <div className="item" onClick={() => fabricCanvas().sendTo('back')}>
         <FaAngleDoubleDown />
       </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import useClickOutside from '../hooks/useClickOutside';
-import '../sass/fillColor.scss';
+import '../sass/panel.scss';
 
 type FillColorProps = {
   color?: string;
