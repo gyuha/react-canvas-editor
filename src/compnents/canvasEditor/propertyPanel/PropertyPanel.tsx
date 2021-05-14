@@ -10,8 +10,9 @@ import {
 import { FabricCanvas } from '../FabricCanvas';
 import '../sass/panel.scss';
 import FillColor from './FillColor';
+import FontFamily from './FontFamily';
 import FontSize from './FontSize';
-import InputRange from './InputRange';
+import Opacity from './Opacity';
 
 type PropertyPanelProps = {
   fabricCanvas: () => FabricCanvas;
@@ -39,6 +40,7 @@ const PropertyPanel = ({
   fabricCanvas,
 }: PropertyPanelProps): React.ReactElement | null => {
   const position = getPanelPosition(activeObject, fabricCanvas().canvas);
+  console.log('📢[PropertyPanel.tsx:41]:', activeObject);
 
   return (
     <div className="rce-property-panel" style={position}>
@@ -47,6 +49,12 @@ const PropertyPanel = ({
       )}
       {activeObject.fontSize && (
         <FontSize canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      )}
+      {activeObject.fontSize && (
+        <FontFamily canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      )}
+      {activeObject.opacity && (
+        <Opacity canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
       <div className="item" onClick={() => fabricCanvas().sendTo('back')}>
         <FaAngleDoubleDown />
