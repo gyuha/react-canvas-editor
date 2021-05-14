@@ -16,7 +16,6 @@ const InputRange = ({
   onChange,
 }: InputRangeProps): React.ReactElement | null => {
   const onValueChange = (e: any) => {
-    console.log('📢[InputRange.tsx:18]:', e);
     onChange(e.target.value);
   };
   return (
