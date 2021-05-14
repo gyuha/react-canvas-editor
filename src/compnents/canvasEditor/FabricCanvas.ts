@@ -16,17 +16,26 @@ export class FabricCanvas {
 
   private clipboard: any = null;
 
-  private _activeObject: any = null;
+  private setActiveObject: (value: any) => void;
 
-  constructor(id: string, width: number, height: number) {
+  public activeObject: any = null;
+
+  private updatedActiveObject(value: any) {
+    this.activeObject = value;
+    this.setActiveObject(value);
+  }
+
+  constructor(id: string, width: number, height: number, setActiveObject: any) {
     this.canvas = new fabric.Canvas(id, {
       preserveObjectStacking: true,
       width,
       height,
     });
+    this.setActiveObject = setActiveObject;
 
+    // for panel
     this.canvas.on('selection:cleared', () => {
-      this._activeObject = null;
+      this.updatedActiveObject(null);
     });
     this.canvas.on('selection:updated', (e) => this.onSelect(e, this.canvas));
     this.canvas.on('selection:created', (e) => this.onSelect(e, this.canvas));
@@ -37,10 +46,6 @@ export class FabricCanvas {
     this.canvas.on('object:moved', (e) => this.onMoved(e, this.canvas));
     this.canvas.on('object:scaled', (e) => this.onMoved(e, this.canvas));
     this.canvas.on('object:rotated', (e) => this.onMoved(e, this.canvas));
-  }
-
-  public get activeObject() {
-    return this._activeObject;
   }
 
   sendTo(type: SendToType): void {
@@ -109,10 +114,11 @@ export class FabricCanvas {
   onSelect(e: any, canvas: any) {
     try {
       if (canvas.getActiveObjects().length === 1) {
-        this._activeObject = e.target;
+        this.activeObject = e.target;
       } else {
-        this._activeObject = null;
+        this.activeObject = null;
       }
+      this.setActiveObject(this.activeObject);
     } catch (err: any) {
       console.log(err);
     }
@@ -120,13 +126,15 @@ export class FabricCanvas {
 
   onMove(canvas: any) {
     if (canvas.getActiveObjects().length === 1) {
-      this._activeObject = null;
+      this.activeObject = null;
+      this.setActiveObject(this.activeObject);
     }
   }
 
   onMoved(e: any, canvas: any) {
     if (canvas.getActiveObjects().length === 1) {
-      this._activeObject = e.target;
+      this.activeObject = e.target;
+      this.setActiveObject(this.activeObject);
     }
   }
 

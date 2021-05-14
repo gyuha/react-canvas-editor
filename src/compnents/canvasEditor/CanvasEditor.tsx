@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/tabindex-no-positive */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FabricCanvas } from './FabricCanvas';
 import Toolbar from './Toolbar';
 import './sass/editor.scss';
+import PropertyPanel from './propertyPanel/PropertyPanel';
 
 type CanvasEditorProps = {
   id: string; //! 캠버스 아이디
@@ -16,17 +17,19 @@ const CanvasEditor = ({ id, width, height }: CanvasEditorProps): React.ReactElem
 
   const canvas = () => fabricCanvas.current;
 
+  const [activeObject, setActiveObject] = useState(null);
+
   useEffect(() => {
-    fabricCanvas.current = new FabricCanvas(id, width, height);
+    fabricCanvas.current = new FabricCanvas(id, width, height, setActiveObject);
   }, []);
 
   return (
     <div className="rce" style={{ width }} tabIndex={1000} onKeyUp={(e) => canvas().onKeyUp(e)}>
       <Toolbar fabricCanvas={() => fabricCanvas.current} />
       <canvas id={id} className="canvas" />
-      {/* {fabricCanvas?.activeObject && (
-        <PropertyPanel activeObject={fabricCanvas?.activeObject} canvas={() => fabricCanvas} />
-      )} */}
+      {activeObject && (
+        <PropertyPanel activeObject={activeObject} fabricCanvas={() => fabricCanvas.current} />
+      )}
     </div>
   );
 };
