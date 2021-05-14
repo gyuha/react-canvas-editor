@@ -198,4 +198,69 @@ export class FabricCanvas {
     // @ts-ignore
     this.canvas.undo();
   }
+
+  onKeyUp(e: React.KeyboardEvent<HTMLDivElement>) {
+    // console.log('📢[CanvasEditor.tsx:140]:', e.code);
+    let step = 10;
+    if (e.shiftKey) {
+      step = 1;
+    }
+    switch (e.code) {
+      case 'Delete':
+        this.removeActiveObjects();
+        break;
+      case 'KeyC':
+        if (e.ctrlKey) {
+          this.copy();
+        }
+        break;
+      case 'KeyV':
+        if (e.ctrlKey) {
+          this.paste();
+        }
+        break;
+      case 'KeyA':
+        if (e.ctrlKey) {
+          this.selectAll();
+        }
+        break;
+      case 'ArrowUp':
+        if (e.ctrlKey && e.shiftKey) {
+          this.sendTo('front');
+          return;
+        }
+        if (e.ctrlKey) {
+          this.sendTo('forward');
+          return;
+        }
+        this.activeObjectMove(0, -step);
+        break;
+      case 'ArrowDown':
+        if (e.ctrlKey && e.shiftKey) {
+          this.sendTo('back');
+          return;
+        }
+        if (e.ctrlKey) {
+          this.sendTo('backwards');
+          return;
+        }
+        this.activeObjectMove(0, step);
+        break;
+      case 'ArrowLeft':
+        this.activeObjectMove(-step, 0);
+        break;
+      case 'ArrowRight':
+        this.activeObjectMove(step, 0);
+        break;
+      case 'KeyZ':
+        if (e.ctrlKey && e.shiftKey) {
+          this.redo();
+        } else if (e.ctrlKey) {
+          this.undo();
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
