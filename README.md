@@ -28,20 +28,18 @@
   - [x] object send to forward or back
   - [ ] save image
 - [ ] property panel show / hide 
-  - [ ] slider component
-  - [ ] Basic panel
-    - [ ] delete
+  - [x] slider component
+  - [x] Basic panel
+    - [x] delete
   - [x] fill color change
-  - [ ] line color change
+  - [x] strock color change
   - [ ] text
-    - [ ] font change
+    - [x] font change
     - [ ] italic
     - [ ] bold
-    - [ ] underbar
+    - [ ] underline
     - [ ] size
-  - [ ] react
-  - [ ] cricle 
-  - [ ] text 
-  - [ ] image
+  - [x] cricle 
+  - [x] image
 - [x] undo / redo
 - [x] object click and drop function

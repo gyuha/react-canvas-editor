@@ -31,6 +31,9 @@ const getPanelPosition = (object: any, canvas: any): { left?: number; top?: numb
   if (canvas.height < top) {
     top = canvas.height;
   }
+  if (object.strokeWidth) {
+    top += object.strokeWidth * 3;
+  }
   const left = object.left < 0 ? 0 : object.left;
   return {
     left,
@@ -55,19 +58,19 @@ const PropertyPanel = ({
     return false;
   }, [activeObject]);
 
+  const isFont = useCallback(() => activeObject.fontSize, [activeObject]);
+
   return (
     <div className="rce-property-panel" style={position}>
       {!isImage() && <FillColor canvas={fabricCanvas().canvas} activeObject={activeObject} />}
-      {!activeObject.fontSize && activeObject.stroke && (
+      {!isFont() && activeObject.stroke && (
         <StrokeColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
-      {!activeObject.fontSize && activeObject.stroke && (
+      {!isFont() && activeObject.stroke && (
         <StrokeWidth min={0} max={20} canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
-      {activeObject.fontSize && (
-        <FontFamily canvas={fabricCanvas().canvas} activeObject={activeObject} />
-      )}
-      {activeObject.fontSize && (
+      {isFont() && <FontFamily canvas={fabricCanvas().canvas} activeObject={activeObject} />}
+      {isFont() && (
         <SetRange
           min={5}
           max={100}
