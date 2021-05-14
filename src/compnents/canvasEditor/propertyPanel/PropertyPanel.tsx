@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   FaAngleDoubleDown,
   FaAngleDoubleUp,
@@ -45,15 +45,23 @@ const PropertyPanel = ({
   const position = getPanelPosition(activeObject, fabricCanvas().canvas);
   console.log('📢[PropertyPanel.tsx:41]:', activeObject);
 
+  const isImage = useCallback(() => {
+    if (activeObject.filters === undefined) {
+      return false;
+    }
+    if (activeObject.filters.length >= 0) {
+      return true;
+    }
+    return false;
+  }, [activeObject]);
+
   return (
     <div className="rce-property-panel" style={position}>
-      {activeObject.fill && (
-        <FillColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
-      )}
-      {!activeObject.fontSize && (
+      {!isImage() && <FillColor canvas={fabricCanvas().canvas} activeObject={activeObject} />}
+      {!activeObject.fontSize && activeObject.stroke && (
         <StrokeColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
-      {!activeObject.fontSize && (
+      {!activeObject.fontSize && activeObject.stroke && (
         <StrokeWidth min={0} max={20} canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
       {activeObject.fontSize && (
