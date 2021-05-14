@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  FaTrash,
   FaAngleDoubleDown,
+  FaAngleDoubleUp,
   FaAngleDown,
   FaAngleUp,
-  FaAngleDoubleUp,
   FaRegClone,
+  FaTrash,
 } from 'react-icons/fa';
+import { ImFontSize } from 'react-icons/im';
 import { FabricCanvas } from '../FabricCanvas';
 import '../sass/panel.scss';
 import FillColor from './FillColor';
 import FontFamily from './FontFamily';
-import FontSize from './FontSize';
 import Opacity from './Opacity';
+import SetRange from './SetRange';
+import StrokeColor from './StrokeColor';
+import StrokeWidth from './StrokeWidth';
 
 type PropertyPanelProps = {
   fabricCanvas: () => FabricCanvas;
@@ -47,11 +50,25 @@ const PropertyPanel = ({
       {activeObject.fill && (
         <FillColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
-      {activeObject.fontSize && (
-        <FontSize canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      {!activeObject.fontSize && (
+        <StrokeColor canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      )}
+      {!activeObject.fontSize && (
+        <StrokeWidth min={0} max={20} canvas={fabricCanvas().canvas} activeObject={activeObject} />
       )}
       {activeObject.fontSize && (
         <FontFamily canvas={fabricCanvas().canvas} activeObject={activeObject} />
+      )}
+      {activeObject.fontSize && (
+        <SetRange
+          min={5}
+          max={100}
+          changeValue="fontSize"
+          canvas={fabricCanvas().canvas}
+          activeObject={activeObject}
+        >
+          <ImFontSize />
+        </SetRange>
       )}
       {activeObject.opacity && (
         <Opacity canvas={fabricCanvas().canvas} activeObject={activeObject} />

@@ -1,46 +1,47 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { CgDropOpacity } from 'react-icons/cg';
+import { AiOutlineColumnWidth } from 'react-icons/ai';
 import useClickOutside from '../hooks/useClickOutside';
 import InputRange from './InputRange';
 
-type OpacityProps = {
+type StrokeWidthProps = {
   canvas: fabric.Canvas;
-  activeObject: fabric.TextOptions;
+  activeObject: any;
+  min: number;
+  max: number;
 };
 
-const Opacity = ({ canvas, activeObject }: OpacityProps): React.ReactElement | null => {
+const StrokeWidth = ({
+  canvas,
+  activeObject,
+  min,
+  max,
+}: StrokeWidthProps): React.ReactElement | null => {
   const popover = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [, setOpercity] = useState(0);
+  const [, setChange] = useState(0);
 
   const close = useCallback(() => setIsOpen(false), []);
 
   useClickOutside(popover, close);
 
   const onChange = (value: number) => {
-    setOpercity(value);
-    activeObject.opacity = value / 100;
+    setChange(Number(value));
+    activeObject.set({ stroke: activeObject.stroke, strokeWidth: Number(value) });
     canvas.renderAll();
   };
 
   return (
     <div className="item picker" onClick={() => setIsOpen(true)}>
-      <CgDropOpacity />
+      <AiOutlineColumnWidth />
       {isOpen && (
         <div className="popover input-range" ref={popover}>
-          <InputRange
-            min={0}
-            max={100}
-            step={0.1}
-            value={Number(activeObject.opacity) * 100}
-            onChange={onChange}
-          />
+          <InputRange min={min} max={max} value={activeObject.strokeWidth} onChange={onChange} />
         </div>
       )}
     </div>
   );
 };
 
-Opacity.defaultProps = {} as OpacityProps;
+StrokeWidth.defaultProps = {} as StrokeWidthProps;
 
-export default Opacity;
+export default StrokeWidth;

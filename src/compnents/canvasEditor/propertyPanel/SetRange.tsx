@@ -1,15 +1,24 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { ImFontSize } from 'react-icons/im';
 import useClickOutside from '../hooks/useClickOutside';
-import '../sass/panel.scss';
 import InputRange from './InputRange';
 
-type FontSizeProps = {
+type SetRangeProps = {
   canvas: fabric.Canvas;
-  activeObject: fabric.TextOptions;
+  activeObject: any;
+  changeValue: string;
+  min: number;
+  max: number;
+  children: JSX.Element;
 };
 
-const FontSize = ({ canvas, activeObject }: FontSizeProps): React.ReactElement | null => {
+const SetRange = ({
+  children,
+  canvas,
+  activeObject,
+  changeValue,
+  min,
+  max,
+}: SetRangeProps): React.ReactElement | null => {
   const popover = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [, setFontSize] = useState(0);
@@ -20,22 +29,22 @@ const FontSize = ({ canvas, activeObject }: FontSizeProps): React.ReactElement |
 
   const onChange = (value: number) => {
     setFontSize(value);
-    activeObject.fontSize = value;
+    activeObject[changeValue] = Number(value);
     canvas.renderAll();
   };
 
   return (
-    <div className="item picker">
-      <ImFontSize onClick={() => setIsOpen(true)} />
+    <div className="item picker" onClick={() => setIsOpen(true)}>
+      {children}
       {isOpen && (
         <div className="popover input-range" ref={popover}>
-          <InputRange min={5} max={100} value={activeObject.fontSize} onChange={onChange} />
+          <InputRange min={min} max={max} value={activeObject[changeValue]} onChange={onChange} />
         </div>
       )}
     </div>
   );
 };
 
-FontSize.defaultProps = {} as FontSizeProps;
+SetRange.defaultProps = {} as SetRangeProps;
 
-export default FontSize;
+export default SetRange;

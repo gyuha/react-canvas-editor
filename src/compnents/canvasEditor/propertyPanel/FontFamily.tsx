@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { BiFontFamily } from 'react-icons/bi';
 import useClickOutside from '../hooks/useClickOutside';
-import InputRange from './InputRange';
 
 type FontFamilyProps = {
   canvas: fabric.Canvas;
@@ -32,22 +31,24 @@ const FontFamily = ({ canvas, activeObject }: FontFamilyProps): React.ReactEleme
 
   const onChange = (value: any) => {
     setFontFamily(value);
-    activeObject.fontFamily = value.target.value;
+    activeObject.fontFamily = value;
     canvas.renderAll();
+    close();
   };
 
   return (
-    <div className="item picker">
-      <BiFontFamily onClick={() => setIsOpen(true)} />
+    <div className="item picker" onClick={() => setIsOpen(true)}>
+      <BiFontFamily />
       {isOpen && (
-        <div className="popover input-range" ref={popover}>
-          <select onChange={onChange}>
+        <div className="popover select" ref={popover}>
+          <ul>
             {fonts.map((font, idx) => (
-              <option value={font} key={idx}>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+              <li key={idx} onClick={() => onChange(font)} style={{ fontFamily: font }}>
                 {font}
-              </option>
+              </li>
             ))}
-          </select>
+          </ul>
         </div>
       )}
     </div>
