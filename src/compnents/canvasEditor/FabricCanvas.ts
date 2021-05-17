@@ -1,5 +1,7 @@
 import { fabric } from 'fabric';
 import 'fabric-history';
+import initAligningGuidelines from './handlers/aligning_guidelines';
+import initCenteringGuidelines from './handlers/centering_guidelines';
 
 // set cornet style
 fabric.Object.prototype.set({
@@ -35,6 +37,8 @@ export class FabricCanvas {
       width,
       height,
     });
+    initAligningGuidelines(this.canvas);
+    initCenteringGuidelines(this.canvas);
     this.setActiveObject = setActiveObject;
 
     // for panel
