@@ -12,7 +12,8 @@ fabric.Object.prototype.set({
   cornerSize: 9,
   padding: 5,
   rotatingPointOffset: 2,
-  cornerStyle: 'circle',
+  borderScaleFactor: 2,
+  borderDashArray: [4],
 });
 
 type SendToType = 'back' | 'backwards' | 'forward' | 'front';

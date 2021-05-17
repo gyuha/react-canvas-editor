@@ -35,6 +35,7 @@
   - [x] strock color change
   - [ ] text
     - [x] font change
+    - [ ] text alignment
     - [ ] italic
     - [ ] bold
     - [ ] underline
