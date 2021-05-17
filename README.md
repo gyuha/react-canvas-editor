@@ -38,7 +38,7 @@
     - [ ] italic
     - [ ] bold
     - [ ] underline
-    - [ ] size
+    - [x] size
   - [x] cricle 
   - [x] image
 - [x] undo / redo

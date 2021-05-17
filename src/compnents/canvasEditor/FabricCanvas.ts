@@ -3,9 +3,13 @@ import 'fabric-history';
 
 // set cornet style
 fabric.Object.prototype.set({
-  transparentCorners: false,
-  borderColor: '#da00da',
-  cornerColor: '#ff1919',
+  transparentCorners: true,
+  borderColor: 'gray',
+  cornerColor: 'white',
+  cornerStrokeColor: 'black',
+  cornerSize: 9,
+  padding: 5,
+  rotatingPointOffset: 2,
   cornerStyle: 'circle',
 });
 

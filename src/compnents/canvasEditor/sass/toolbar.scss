@@ -8,8 +8,8 @@
   .item {
     flex: none;
     color: $toolbar-color;
-    margin: 5px;
-    padding:5px;
+    margin: $button-spacing;
+    padding:$button-padding;
     border: solid 1px $toolbar-border-color;
     border-radius: 4px;
     cursor: pointer;

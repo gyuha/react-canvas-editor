@@ -6,17 +6,17 @@
   background-color: $toolbar-background-color;
   border: 1px solid lighten($toolbar-background-color, 10%);
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  padding: $spacing;
+  padding: $button-spacing;
   outline: 0;
   display: flex;
-  border-radius: 10px;
+  border-radius: 5px;
 
 
   .item {
     color: $toolbar-color;
     flex: none;
-    margin: 5px;
-    padding: 5px;
+    margin: $button-spacing;
+    padding: $button-padding;
     border: solid 1px $toolbar-border-color;
     border-radius: 4px;
     cursor: pointer;
@@ -60,10 +60,10 @@
   }
 
   .swatch {
-    width: 24px;
-    height: 28px;
-    margin: 5px;
-    border-radius: 6px;
+    width: 18px;
+    height: 22px;
+    margin: $button-spacing;
+    border-radius: 4px;
     border: 3px solid #fff;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
